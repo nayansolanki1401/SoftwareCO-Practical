@@ -164,7 +164,7 @@ const updateManyUserDifferent = async (body) => {
 
 // ***************************** User Related CRUD ******************************* //
 
-const getUserList = async (req) => {
+const getUserList = async (userId, req) => {
 	let { search } = req.query;
 	let searchfilter = {};
 	const searchFields = ["username"];

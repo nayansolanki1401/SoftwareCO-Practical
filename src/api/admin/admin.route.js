@@ -3,6 +3,7 @@ const validate = require('../../middlewares/validate');
 const adminValidation = require('./admin.validation');
 const adminController = require('./admin.controller');
 const router = express.Router();
+const auth = require('../../middlewares/auth')
 
 // ******************************  AUTHENTICATION RELATED APIs ************************************ //
 
@@ -37,6 +38,12 @@ router.put('/updatemanyuserdifferent', adminController.updateManyUserDifferent);
 router.get('/getuserlist', validate(adminValidation.getUserList), adminController.getUserList); //With search functionality
 router.put('/edituser/:userId', validate(adminValidation.editUser), adminController.editUser);
 router.delete('/deleteuser/:userId', validate(adminValidation.deleteUser), adminController.deleteUser);
+
+// **************************** For Authenticated user *************************************//
+
+router.put('/auth/edituser', auth(), adminController.editUser);
+router.delete('/auth/deleteuser', auth(), adminController.deleteUser);
+
 
 
 module.exports = router;

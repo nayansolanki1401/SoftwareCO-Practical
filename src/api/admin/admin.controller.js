@@ -93,6 +93,17 @@ const deleteUser = catchAsync(async (req, res) => {
 	createResponse(res, httpStatus.OK, Messages.USER_DELETE, UserData)
 })
 
+// ************************************* User CRUD for Authenticated user  *******************************//
+const editUserAuth = catchAsync(async (req, res) => {
+	const UserData = await adminService.editUser(req.user.id, req.body)
+	createResponse(res, httpStatus.OK, Messages.USER_EDIT, UserData)
+})
+
+const deleteUserAuth = catchAsync(async (req, res) => {
+	const UserData = await adminService.deleteUser(req.user.id)
+	createResponse(res, httpStatus.OK, Messages.USER_DELETE, UserData)
+})
+
 module.exports = {
 	login,
 	register,
@@ -103,6 +114,8 @@ module.exports = {
 	getUserList,
 	editUser,
 	deleteUser,
+	editUserAuth,
+	deleteUserAuth,
 	addAccessModule,
 	removeAccessModule,
 	checkAccess,
