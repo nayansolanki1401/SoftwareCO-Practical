@@ -41,9 +41,7 @@ router.delete('/deleteuser/:userId', validate(adminValidation.deleteUser), admin
 
 // **************************** For Authenticated user *************************************//
 
-router.put('/auth/edituser', auth(), adminController.editUser);
-router.delete('/auth/deleteuser', auth(), adminController.deleteUser);
-
-
+router.put('/auth/edituser', auth(), adminController.editUserAuth);
+router.delete('/auth/deleteuser', auth(), adminController.deleteUserAuth);
 
 module.exports = router;

@@ -164,10 +164,10 @@ const updateManyUserDifferent = async (body) => {
 
 // ***************************** User Related CRUD ******************************* //
 
-const getUserList = async (userId, req) => {
+const getUserList = async (req) => {
 	let { search } = req.query;
 	let searchfilter = {};
-	const searchFields = ["username"];
+	const searchFields = ["userName"];
 	if (search) {
 		searchfilter["$or"] = searchFields.map((field) => ({
 			[field]: { $regex: search, $options: "i" },
@@ -223,8 +223,13 @@ const getUserList = async (userId, req) => {
 }
 
 const editUser = async (userId, body) => {
+	console.log(userId)
 	const user = await UserModel.findById(userId)
 	if (user) {
+		const emailExist = await UserModel.findOne({ email: body.email })
+		if (emailExist) {
+			throw new AppError(httpStatus.UNPROCESSABLE_ENTITY, Messages.EMAIL_ALREADY)
+		}
 		return await UserModel.findByIdAndUpdate(userId, body, { new: true })
 	} else {
 		throw new AppError(httpStatus.UNPROCESSABLE_ENTITY, Messages.USER_NOT_FOUND)

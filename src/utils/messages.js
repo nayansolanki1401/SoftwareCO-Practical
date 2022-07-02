@@ -2,7 +2,7 @@ class Messages {
 	static LOGIN = 'You have successfully logged in';
 	static REGISTER = "Registered Successfully";
 	static ALREADY_USER = "Account with given email already exist"
-
+	static EMAIL_ALREADY = "account with same email already exist, please provide different data"
 	static ROLE_ADDED = "Role addeed successfully";
 	static ROLE_LIST = "Role List fetched successfully";
 	static ALREADY_ROLE = "Role already defined, please check role list"

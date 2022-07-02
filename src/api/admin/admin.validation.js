@@ -114,9 +114,13 @@ const editUser = {
 		}),
 	}),
 	body: Joi.object().keys({
-		roleName: Joi.string(),
-		accessModule: Joi.array(),
-		active: Joi.boolean()
+		firstName: Joi.string(),
+		lastName: Joi.string(),
+		userName: Joi.string(),
+		roleId: Joi.string(),
+		email: Joi.string().email().messages({
+			'string.email': 'Are you sure you entered the valid email address?',
+		})
 	}),
 };
 

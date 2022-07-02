@@ -95,6 +95,7 @@ const deleteUser = catchAsync(async (req, res) => {
 
 // ************************************* User CRUD for Authenticated user  *******************************//
 const editUserAuth = catchAsync(async (req, res) => {
+	console.log('req.user.id :', req.user.id)
 	const UserData = await adminService.editUser(req.user.id, req.body)
 	createResponse(res, httpStatus.OK, Messages.USER_EDIT, UserData)
 })
