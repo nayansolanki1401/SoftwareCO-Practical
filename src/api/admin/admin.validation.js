@@ -1,5 +1,4 @@
 const Joi = require('@hapi/joi');
-const { ROLES } = require('../../config/constant');
 
 const register = {
 	body: Joi.object().keys({
@@ -65,6 +64,7 @@ const editRole = {
 };
 
 const getRole = {
+
 };
 
 const deleteRole = {
@@ -74,6 +74,7 @@ const deleteRole = {
 		}),
 	}),
 };
+
 const addAccessModule = {
 	params: Joi.object().required().keys({
 		roleId: Joi.string().required().messages({
@@ -86,6 +87,7 @@ const addAccessModule = {
 		})
 	}),
 };
+
 const removeAccessModule = {
 	params: Joi.object().required().keys({
 		roleId: Joi.string().required().messages({

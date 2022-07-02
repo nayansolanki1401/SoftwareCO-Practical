@@ -7,7 +7,6 @@ const RoleModel = require('../../models/role.model')
 const Messages = require('../../utils/messages');
 const AppError = require('../../utils/AppError')
 const mongoose = require('mongoose')
-const ObjectId = mongoose.Types.ObjectId
 const httpStatus = require('http-status')
 const bcrypt = require('bcrypt');
 
@@ -69,16 +68,13 @@ const getUserByEmail = async (email) => {
 // ***************************** Role Related CRUD ******************************* //
 
 const addRole = async (req) => {
-	try {
-		const alreadyRole = await RoleModel.findOne({ roleName: req.body.roleName })
-		if (alreadyRole) {
-			throw new AppError(httpStatus.UNPROCESSABLE_ENTITY, Messages.ALREADY_ROLE)
-		}
-		const RoleData = await RoleModel.create(req.body)
-		return RoleData
-	} catch (e) {
-		throw new AppError(httpStatus.UNPROCESSABLE_ENTITY, e.errors._message)
+	const alreadyRole = await RoleModel.findOne({ roleName: req.body.roleName })
+	if (alreadyRole) {
+		throw new AppError(httpStatus.UNPROCESSABLE_ENTITY, Messages.ALREADY_ROLE)
 	}
+	const RoleData = await RoleModel.create(req.body)
+	return RoleData
+
 }
 
 const getRole = async () => {
@@ -101,28 +97,49 @@ const editRole = async (roleId, body) => {
 			}
 		}
 	}
-
-
-
 }
 
 const deleteRole = async (roleId) => {
-	return await RoleModel.findByIdAndDelete(roleId);
+	const Role = await RoleModel.findById(roleId)
+	if (Role) {
+		return await RoleModel.findByIdAndDelete(roleId);
+	} else {
+		throw new AppError(httpStatus.UNPROCESSABLE_ENTITY, Messages.ROLE_NOT_FOUND)
+	}
+
+
 }
 
 
 // Add a functionality to update list of access modules like adding payment module access to specific user and removing the same
 
 const addAccessModule = async (roleId, moduleName) => {
-	return await RoleModel.findByIdAndUpdate(roleId, { $push: { accessModule: moduleName } }, { new: true })
+	const Role = await RoleModel.findById(roleId)
+	if (Role) {
+		return await RoleModel.findByIdAndUpdate(roleId, { $push: { accessModule: moduleName } }, { new: true })
+	} else {
+		throw new AppError(httpStatus.UNPROCESSABLE_ENTITY, Messages.ROLE_NOT_FOUND)
+	}
+
 }
 
 const removeAccessModule = async (roleId, moduleName) => {
-	return await RoleModel.findByIdAndUpdate(roleId, { $pull: { accessModule: moduleName } }, { new: true })
+	const Role = await RoleModel.findById(roleId)
+	if (Role) {
+		return await RoleModel.findByIdAndUpdate(roleId, { $pull: { accessModule: moduleName } }, { new: true })
+	} else {
+		throw new AppError(httpStatus.UNPROCESSABLE_ENTITY, Messages.ROLE_NOT_FOUND)
+	}
+
 }
 
 const checkAccess = async (roleId, moduleName) => {
-	return await RoleModel.findOne({ _id: roleId, accessModule: moduleName })
+	const Role = await RoleModel.findById(roleId)
+	if (Role) {
+		return await RoleModel.findOne({ _id: roleId, accessModule: moduleName })
+	} else {
+		throw new AppError(httpStatus.UNPROCESSABLE_ENTITY, Messages.ROLE_NOT_FOUND)
+	}
 }
 
 const updateManyUser = async (body) => {

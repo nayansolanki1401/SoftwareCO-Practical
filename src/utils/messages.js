@@ -16,6 +16,7 @@ class Messages {
 	static UPDATE_MANY = "Update many functionality"
 	static UPDATE_MANY_COND = "Update many with condition"
 	static USER_NOT_FOUND = "User not found"
+	static ROLE_NOT_FOUND = "Role not found"
 }
 
 module.exports = Messages;

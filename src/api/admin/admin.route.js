@@ -28,11 +28,13 @@ router.get('/checkaccess/:roleId', adminController.checkAccess);
 
 //Add a functionality to update many users with same data. Ex. update all user lastname to "modul"
 router.put('/updatemanyuser', adminController.updateManyUser);
+
+//a functionality to update many users with different data. Ex. change one users's firstName, another's access modules and email in same dbb call
 router.put('/updatemanyuserdifferent', adminController.updateManyUserDifferent);
 
 // ******************************  User RELATED APIs ************************************ //
 
-router.get('/getuserlist', validate(adminValidation.getUserList), adminController.getUserList);
+router.get('/getuserlist', validate(adminValidation.getUserList), adminController.getUserList); //With search functionality
 router.put('/edituser/:userId', validate(adminValidation.editUser), adminController.editUser);
 router.delete('/deleteuser/:userId', validate(adminValidation.deleteUser), adminController.deleteUser);
 
